@@ -1,0 +1,12 @@
+C:\Dev\Projetos\Commerce\Commerce.Models\bin\Debug\net6.0\Commerce.Models.deps.json
+C:\Dev\Projetos\Commerce\Commerce.Models\bin\Debug\net6.0\Commerce.Models.dll
+C:\Dev\Projetos\Commerce\Commerce.Models\bin\Debug\net6.0\Commerce.Models.pdb
+C:\Dev\Projetos\Commerce\Commerce.Models\obj\Debug\net6.0\Commerce.Models.csproj.AssemblyReference.cache
+C:\Dev\Projetos\Commerce\Commerce.Models\obj\Debug\net6.0\Commerce.Models.GeneratedMSBuildEditorConfig.editorconfig
+C:\Dev\Projetos\Commerce\Commerce.Models\obj\Debug\net6.0\Commerce.Models.AssemblyInfoInputs.cache
+C:\Dev\Projetos\Commerce\Commerce.Models\obj\Debug\net6.0\Commerce.Models.AssemblyInfo.cs
+C:\Dev\Projetos\Commerce\Commerce.Models\obj\Debug\net6.0\Commerce.Models.csproj.CoreCompileInputs.cache
+C:\Dev\Projetos\Commerce\Commerce.Models\obj\Debug\net6.0\Commerce.Models.dll
+C:\Dev\Projetos\Commerce\Commerce.Models\obj\Debug\net6.0\refint\Commerce.Models.dll
+C:\Dev\Projetos\Commerce\Commerce.Models\obj\Debug\net6.0\Commerce.Models.pdb
+C:\Dev\Projetos\Commerce\Commerce.Models\obj\Debug\net6.0\ref\Commerce.Models.dll

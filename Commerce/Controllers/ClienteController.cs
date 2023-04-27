@@ -1,3 +1,4 @@
+using Commerce.API.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Commerce.Controllers
@@ -5,24 +6,30 @@ namespace Commerce.Controllers
     [ApiController]
     [Route("[controller]")]
     public class ClienteController : ControllerBase
-    {        
-        List<string> List = new List<string>();
+    {
+        private readonly IClienteRepository _repository;
+        public ClienteController(IClienteRepository repository)
+        {
+            _repository= repository;
+        }
+        
         [HttpGet]
         public IActionResult get()
         {
-            return Ok(List);
+            var clientes = _repository.GetAll();
+            return Ok(clientes);
         }
         [HttpPost]
-        public IActionResult post(string cliente) 
+        public IActionResult Insert(string cliente) 
         {
-            List.Add(cliente);
-            return Ok(cliente);
+            
+            return Ok();
         }
         [HttpDelete]
         public IActionResult delete(string cliente) 
         { 
-            List.Remove(cliente);
-            return Ok(cliente);
+            
+            return Ok();
         }
     }
 }
