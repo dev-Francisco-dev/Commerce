@@ -1,5 +1,6 @@
 ﻿using Commerce.API.Data;
 using Commerce.Models.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Commerce.API.Repository
 {
@@ -18,22 +19,25 @@ namespace Commerce.API.Repository
 
         public Cliente Get(int id)
         {
-            throw new NotImplementedException();
+            return _db.Clientes.SingleOrDefault(predicate: x => x.Id == id)!;
         }
 
         public void Insert(Cliente cliente)
         {
-            throw new NotImplementedException();
+            _db.Add(cliente);
+            _db.SaveChanges();            
         }
 
         public void Update(Cliente cliente)
         {
-            throw new NotImplementedException();
+            _db.Entry(cliente).State = EntityState.Modified;            
+            _db.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            _db.Remove(Get(id));
+            _db.SaveChanges();
         }
 
        
