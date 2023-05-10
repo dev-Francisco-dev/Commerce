@@ -14,12 +14,12 @@ namespace Commerce.API.Repository
 
         public List<Cliente> GetAll()
         {
-            return _db.Clientes.Include(cl => cl.Telefones).OrderBy(cl => cl.Id).ToList();
+            return _db.Clientes.Include(cl => cl.Telefones).Include(cl => cl.enderecoEntregas).OrderBy(cl => cl.Id).ToList();
         }
 
         public Cliente Get(int id)
         {
-            return _db.Clientes.Include(cl => cl.Telefones).Single(x => x.Id == id);
+            return _db.Clientes.Include(cl => cl.Telefones).Include(cl => cl.enderecoEntregas).Single(x => x.Id == id);
         }
 
         public void Insert(Cliente cliente)

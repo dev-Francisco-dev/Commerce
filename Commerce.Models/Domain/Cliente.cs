@@ -13,5 +13,6 @@ namespace Commerce.Models.Domain
         public string Email { set;  get; }
         public string CpfOuCnpj { set;  get; }
         public ICollection<Telefone>? Telefones { get; set; }
+        public ICollection<EnderecoEntrega>? enderecoEntregas { get; set; }
     }
 }

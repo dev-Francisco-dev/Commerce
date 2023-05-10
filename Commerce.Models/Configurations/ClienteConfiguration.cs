@@ -13,6 +13,7 @@ namespace Commerce.Models.Configurations
             builder.Property(cl => cl.Name).HasMaxLength(200);
             builder.Property(cl => cl.CpfOuCnpj).HasMaxLength(13);
             builder.HasMany(cl => cl.Telefones).WithOne(tl => tl.Cliente).HasForeignKey(tl => tl.ClienteId);
+            builder.HasMany(cl => cl.enderecoEntregas).WithOne(tl => tl.Cliente).HasForeignKey(tl => tl.ClienteId);
         }
     }
 }

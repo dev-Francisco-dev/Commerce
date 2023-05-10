@@ -11,11 +11,13 @@ namespace Commerce.API.Data
 
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Telefone> Telefones { get; set; }
+        public DbSet<EnderecoEntrega> EnderecoEntregas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder Modelbuider)
         {
             Modelbuider.ApplyConfiguration<Cliente>(new ClienteConfiguration());
             Modelbuider.ApplyConfiguration<Telefone>(new TelefoneConfiguration());
+            Modelbuider.ApplyConfiguration<EnderecoEntrega>(new EnderecoEntregaConfiguration());
         }
 
     }
