@@ -10,10 +10,12 @@ namespace Commerce.API.Data
         public CommerceDbContext(DbContextOptions<CommerceDbContext> options) : base(options) { }
 
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Telefone> Telefones { get; set; }
 
         protected override void OnModelCreating(ModelBuilder Modelbuider)
         {
             Modelbuider.ApplyConfiguration<Cliente>(new ClienteConfiguration());
+            Modelbuider.ApplyConfiguration<Telefone>(new TelefoneConfiguration());
         }
 
     }

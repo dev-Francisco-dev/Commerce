@@ -38,9 +38,9 @@ namespace Commerce.Controllers
             _repository.Insert(cliente);
             return Ok(cliente);
         }
-        [HttpPut("{id}")]
+        [HttpPut]
 
-        public IActionResult UpDate([FromBody] Cliente cliente, int id)
+        public IActionResult UpDate([FromBody] Cliente cliente)
         {
             _repository.Update(cliente);
             return Ok ();
