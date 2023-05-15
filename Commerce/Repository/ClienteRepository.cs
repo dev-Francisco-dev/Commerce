@@ -33,7 +33,6 @@ namespace Commerce.API.Repository
             _db.Entry(cliente).State = EntityState.Modified;            
             _db.SaveChanges();
         }
-
         public void Delete(int id)
         {
             _db.Remove(Get(id));

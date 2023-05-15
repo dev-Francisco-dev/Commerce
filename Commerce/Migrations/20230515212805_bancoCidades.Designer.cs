@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Commerce.API.Migrations
 {
     [DbContext(typeof(CommerceDbContext))]
-    [Migration("20230510214427_banco06")]
-    partial class banco06
+    [Migration("20230515212805_bancoCidades")]
+    partial class bancoCidades
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,26 @@ namespace Commerce.API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Commerce.Models.Domain.Cidade", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EnderecoEntregaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cidades");
+                });
 
             modelBuilder.Entity("Commerce.Models.Domain.Cliente", b =>
                 {
@@ -69,6 +89,9 @@ namespace Commerce.API.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<int>("CidadeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
 
@@ -77,7 +100,6 @@ namespace Commerce.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Logradouro")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -87,6 +109,8 @@ namespace Commerce.API.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CidadeId");
 
                     b.HasIndex("ClienteId");
 
@@ -123,11 +147,19 @@ namespace Commerce.API.Migrations
 
             modelBuilder.Entity("Commerce.Models.Domain.EnderecoEntrega", b =>
                 {
+                    b.HasOne("Commerce.Models.Domain.Cidade", "Cidade")
+                        .WithMany("EnderecoEntrega")
+                        .HasForeignKey("CidadeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Commerce.Models.Domain.Cliente", "Cliente")
                         .WithMany("enderecoEntregas")
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Cidade");
 
                     b.Navigation("Cliente");
                 });
@@ -141,6 +173,11 @@ namespace Commerce.API.Migrations
                         .IsRequired();
 
                     b.Navigation("Cliente");
+                });
+
+            modelBuilder.Entity("Commerce.Models.Domain.Cidade", b =>
+                {
+                    b.Navigation("EnderecoEntrega");
                 });
 
             modelBuilder.Entity("Commerce.Models.Domain.Cliente", b =>
