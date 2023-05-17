@@ -2,10 +2,12 @@
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Commerce.API.Migrations
 {
     /// <inheritdoc />
-    public partial class bancoCidades : Migration
+    public partial class BancoInicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,8 +18,7 @@ namespace Commerce.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    EnderecoEntregaId = table.Column<int>(type: "int", nullable: false)
+                    Nome = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,11 +44,11 @@ namespace Commerce.API.Migrations
                 name: "EnderecoEntregas",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ClienteId = table.Column<int>(type: "int", nullable: false),
                     CidadeId = table.Column<int>(type: "int", nullable: false),
-                    Logradouro = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Logradouro = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Numero = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Complemento = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Bairro = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
@@ -55,7 +56,7 @@ namespace Commerce.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EnderecoEntregas", x => x.Id);
+                    table.PrimaryKey("PK_EnderecoEntregas", x => x.id);
                     table.ForeignKey(
                         name: "FK_EnderecoEntregas_Cidades_CidadeId",
                         column: x => x.CidadeId,
@@ -89,6 +90,41 @@ namespace Commerce.API.Migrations
                         principalTable: "Clientes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cidades",
+                columns: new[] { "Id", "Nome" },
+                values: new object[,]
+                {
+                    { 1, "Osasco" },
+                    { 2, "Barueri" },
+                    { 3, "Santana de Parnaiba" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Clientes",
+                columns: new[] { "Id", "CpfOuCnpj", "Email", "Name" },
+                values: new object[,]
+                {
+                    { 1, "31421991870", "Ninocz@hotmail.com", "Francisco Alixandre" },
+                    { 2, "32145698774", "marcela@gmail.com", "Marcela Martins" },
+                    { 3, "78945612354", "gio@gmail.com", "Giovanna ferreia" },
+                    { 4, "45632198754", "Alice@gmail.com", "Alice" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "EnderecoEntregas",
+                columns: new[] { "id", "Bairro", "Cep", "CidadeId", "ClienteId", "Complemento", "Logradouro", "Numero" },
+                values: new object[,]
+                {
+                    { 1, "Mutinga", "64512-230", 1, 1, "Casa", "Avenida", "100" },
+                    { 2, "Piratininga", "47851-365", 1, 2, "Ape", "rua", "200" },
+                    { 3, "Veloso", "65214-200", 3, 2, "Ape", "Avenida", "5621" },
+                    { 4, "Centro", "89564-780", 3, 3, "Casa", "rua", "4711" },
+                    { 5, "Remedios", "32569-210", 2, 3, "Ape", "Avenida", "156" },
+                    { 6, "Santo Antonio", "21452-100", 2, 3, "Ape", "Avenida", "65241" },
+                    { 7, "Mutinga", "06286-210", 1, 1, "Casa", "rua", "342" }
                 });
 
             migrationBuilder.CreateIndex(

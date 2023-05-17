@@ -10,7 +10,6 @@ namespace Commerce.Models.Domain
     {
         public int Id { get; set; }
         public string? Nome { get; set; }
-        public int EnderecoEntregaId { get; set; }
         public ICollection< EnderecoEntrega>? EnderecoEntrega { get; set; }
     }
 

@@ -11,7 +11,7 @@ namespace Commerce.Models.Configurations
             builder.Property(a => a.Id).IsRequired();
             builder.HasKey(a => a.Id);
             builder.Property(a => a.Nome).HasMaxLength(200);
-            builder.HasMany(a => a.EnderecoEntrega).WithOne(e => e.Cidade).HasForeignKey(a => a.CidadeId);
+            builder.HasMany(a => a.EnderecoEntrega).WithOne(e => e.Cidade);
         }
     }
 }

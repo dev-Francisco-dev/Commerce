@@ -8,8 +8,8 @@ namespace Commerce.Models.Configurations
     {
         public void Configure(EntityTypeBuilder<EnderecoEntrega> builder)
         {
-            builder.Property(cl => cl.Id).IsRequired();
-            builder.HasKey(cl => cl.Id);
+            builder.Property(cl => cl.id).IsRequired();
+            builder.HasKey(cl =>  cl.id);
             builder.Property(cl => cl.Bairro).HasMaxLength(200);
             builder.Property(cl => cl.Cep).HasMaxLength(200);
             builder.Property(cl => cl.Numero).HasMaxLength(200);
