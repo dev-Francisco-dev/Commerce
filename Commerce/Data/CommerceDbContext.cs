@@ -13,6 +13,7 @@ namespace Commerce.API.Data
         public DbSet<Telefone> Telefones { get; set; }
         public DbSet<EnderecoEntrega> EnderecoEntregas { get; set; }
         public DbSet<Cidade> Cidades { get; set; }
+        public DbSet<Estado> Estados { get; set; }
 
         protected override void OnModelCreating(ModelBuilder Modelbuider)
         {
@@ -28,9 +29,9 @@ namespace Commerce.API.Data
                 new Cliente() { Id = 4, Name = "Alice", CpfOuCnpj = "45632198754", Email = "Alice@gmail.com" });
 
             Modelbuider.Entity<Cidade>().HasData(
-                new Cidade() { Id = 1, Nome = "Osasco" },
-                new Cidade() { Id = 2, Nome = "Barueri" },
-                new Cidade() { Id = 3, Nome = "Santana de Parnaiba" }
+                new Cidade() { Id = 1, EstadoId = 1,  Nome = "Osasco" },
+                new Cidade() { Id = 2, EstadoId = 2, Nome = "Barueri" },
+                new Cidade() { Id = 3, EstadoId = 3, Nome = "Santana de Parnaiba" }
                 );
 
             Modelbuider.Entity<EnderecoEntrega>().HasData(
@@ -43,7 +44,11 @@ namespace Commerce.API.Data
                  new EnderecoEntrega() { id = 6, CidadeId = 2, ClienteId = 3, Bairro = "Santo Antonio", Cep = "21452-100", Complemento = "Ape", Numero = "65241", Logradouro = "Avenida" },
                  new EnderecoEntrega() { id = 7, CidadeId = 1, ClienteId = 1, Bairro = "Mutinga", Cep = "06286-210", Complemento = "Casa", Numero = "342", Logradouro = "rua" });
 
-
+            Modelbuider.Entity<Estado>().HasData(
+                new Estado() { Id = 1, nome = "Osasco" },
+                new Estado() { Id = 2, nome = "São Paulo" },
+                new Estado() { Id = 3, nome = "Santana de Parnaiba" }
+                );
         }
 
     }

@@ -1,6 +1,7 @@
 ﻿using Commerce.API.Data;
 using Commerce.Models.Domain;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Commerce.API.Repository
 {
@@ -14,6 +15,7 @@ namespace Commerce.API.Repository
 
         public List<Cliente> GetAll()
         {
+
             return _db.Clientes.Include(cl => cl.Telefones).Include(cl => cl.enderecoEntregas).OrderBy(cl => cl.Id).ToList();
         }
 
@@ -37,6 +39,8 @@ namespace Commerce.API.Repository
         {
             _db.Remove(Get(id));
             _db.SaveChanges();
-        }       
+        }
+        
+
     }
 }

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Commerce.API.Migrations
 {
     [DbContext(typeof(CommerceDbContext))]
-    [Migration("20230517211139_BancoInicial")]
+    [Migration("20230519175447_BancoInicial")]
     partial class BancoInicial
     {
         /// <inheritdoc />
@@ -32,11 +32,16 @@ namespace Commerce.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("EstadoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nome")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EstadoId");
 
                     b.ToTable("Cidades");
 
@@ -44,16 +49,19 @@ namespace Commerce.API.Migrations
                         new
                         {
                             Id = 1,
+                            EstadoId = 1,
                             Nome = "Osasco"
                         },
                         new
                         {
                             Id = 2,
+                            EstadoId = 2,
                             Nome = "Barueri"
                         },
                         new
                         {
                             Id = 3,
+                            EstadoId = 3,
                             Nome = "Santana de Parnaiba"
                         });
                 });
@@ -241,6 +249,40 @@ namespace Commerce.API.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Commerce.Models.Domain.Estado", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Estados");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            nome = "Osasco"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            nome = "São Paulo"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            nome = "Santana de Parnaiba"
+                        });
+                });
+
             modelBuilder.Entity("Commerce.Models.Domain.Telefone", b =>
                 {
                     b.Property<int>("Id")
@@ -267,6 +309,17 @@ namespace Commerce.API.Migrations
                     b.HasIndex("ClienteId");
 
                     b.ToTable("Telefones");
+                });
+
+            modelBuilder.Entity("Commerce.Models.Domain.Cidade", b =>
+                {
+                    b.HasOne("Commerce.Models.Domain.Estado", "Estado")
+                        .WithMany("Cidades")
+                        .HasForeignKey("EstadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Estado");
                 });
 
             modelBuilder.Entity("Commerce.Models.Domain.EnderecoEntrega", b =>
@@ -309,6 +362,11 @@ namespace Commerce.API.Migrations
                     b.Navigation("Telefones");
 
                     b.Navigation("enderecoEntregas");
+                });
+
+            modelBuilder.Entity("Commerce.Models.Domain.Estado", b =>
+                {
+                    b.Navigation("Cidades");
                 });
 #pragma warning restore 612, 618
         }

@@ -10,6 +10,5 @@ namespace Commerce.API.Repository
         void Update(Cliente cliente);
         void Delete(int id);
 
-
     }
 }

@@ -13,19 +13,6 @@ namespace Commerce.API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Cidades",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cidades", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Clientes",
                 columns: table => new
                 {
@@ -38,6 +25,60 @@ namespace Commerce.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Clientes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Estados",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nome = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Estados", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Telefones",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ClienteId = table.Column<int>(type: "int", nullable: false),
+                    Celular = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    Comercial = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Telefones", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Telefones_Clientes_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "Clientes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cidades",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    EstadoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cidades", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cidades_Estados_EstadoId",
+                        column: x => x.EstadoId,
+                        principalTable: "Estados",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -71,37 +112,6 @@ namespace Commerce.API.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Telefones",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ClienteId = table.Column<int>(type: "int", nullable: false),
-                    Celular = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    Comercial = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Telefones", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Telefones_Clientes_ClienteId",
-                        column: x => x.ClienteId,
-                        principalTable: "Clientes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.InsertData(
-                table: "Cidades",
-                columns: new[] { "Id", "Nome" },
-                values: new object[,]
-                {
-                    { 1, "Osasco" },
-                    { 2, "Barueri" },
-                    { 3, "Santana de Parnaiba" }
-                });
-
             migrationBuilder.InsertData(
                 table: "Clientes",
                 columns: new[] { "Id", "CpfOuCnpj", "Email", "Name" },
@@ -111,6 +121,26 @@ namespace Commerce.API.Migrations
                     { 2, "32145698774", "marcela@gmail.com", "Marcela Martins" },
                     { 3, "78945612354", "gio@gmail.com", "Giovanna ferreia" },
                     { 4, "45632198754", "Alice@gmail.com", "Alice" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Estados",
+                columns: new[] { "Id", "nome" },
+                values: new object[,]
+                {
+                    { 1, "Osasco" },
+                    { 2, "São Paulo" },
+                    { 3, "Santana de Parnaiba" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cidades",
+                columns: new[] { "Id", "EstadoId", "Nome" },
+                values: new object[,]
+                {
+                    { 1, 1, "Osasco" },
+                    { 2, 2, "Barueri" },
+                    { 3, 3, "Santana de Parnaiba" }
                 });
 
             migrationBuilder.InsertData(
@@ -126,6 +156,11 @@ namespace Commerce.API.Migrations
                     { 6, "Santo Antonio", "21452-100", 2, 3, "Ape", "Avenida", "65241" },
                     { 7, "Mutinga", "06286-210", 1, 1, "Casa", "rua", "342" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cidades_EstadoId",
+                table: "Cidades",
+                column: "EstadoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EnderecoEntregas_CidadeId",
@@ -157,6 +192,9 @@ namespace Commerce.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Clientes");
+
+            migrationBuilder.DropTable(
+                name: "Estados");
         }
     }
 }

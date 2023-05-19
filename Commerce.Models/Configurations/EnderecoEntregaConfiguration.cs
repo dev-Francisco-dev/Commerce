@@ -14,6 +14,7 @@ namespace Commerce.Models.Configurations
             builder.Property(cl => cl.Cep).HasMaxLength(200);
             builder.Property(cl => cl.Numero).HasMaxLength(200);
             builder.Property(cl => cl.Logradouro).HasMaxLength(200);
+            builder.HasOne(a => a.Cidade).WithMany(a => a.EnderecoEntrega).HasForeignKey(a => a.CidadeId);
                        
         }
     }
